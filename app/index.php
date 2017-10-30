@@ -8,6 +8,12 @@
 </head>
 <body class="container">
 
+  <?php 
+    ini_set("display_errors", 0); 
+    $error = '';
+    $info = '';
+  ?>
+
   <a href="/">Reset params...</a>
 
   <h1 class="text-center mt-5">Rainbowthing</h1>
@@ -17,6 +23,18 @@
 
   <h4 class="mt-5">New Palette</h4>
   <?php include('./components/palette.php'); ?>
+
+  <?php if ($error) { ?>
+    <div class="alert alert-danger mt-5" role="alert">
+      <?=$error?>
+    </div>
+  <?php } ?>
+
+  <?php if ($info) { ?>
+    <div class="alert alert-success mt-5" role="alert">
+      <?=$info?>
+    </div>
+  <?php } ?>
 
   <div class="row mt-5">
 

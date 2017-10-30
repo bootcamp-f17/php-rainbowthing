@@ -41,18 +41,44 @@
   }
 
   function addPalette($name) {
+    global $error;
+    global $info;
     $sql = "INSERT INTO palettes (palette_name) VALUES ('" . $name . "');";
     $request = pg_query(getDb(), $sql);
+    if ($request) {
+      $info = "Successfully added a new palette!";
+    }
+    else {
+      $error = "Could not add new palette!";
+    }
   }
 
   function deletePalette($id) {
-    $sql = "DELETE FROM palettes WHERE id=" . $id;
-    $request = pg_query(getDb(), $sql);
+    global $error;
+    global $info;
+    $sql1 = "DELETE FROM color_palette WHERE palette_id = " . $id;
+    $request1 = pg_query(getDb(), $sql1);
+    $sql2 = "DELETE FROM palettes WHERE id = " . $id;
+    $request2 = pg_query(getDb(), $sql2);
+    if ($request1 && $request2) {
+      $info = "Palette successfully delete.";
+    }
+    else {
+      $error = "Unable to properly delete palette!";
+    }
   }
 
   function deleteColorFromPalette($id) {
+    global $error;
+    global $info;
     $sql = "DELETE FROM color_palette WHERE id=" . $id;
     $request = pg_query(getDb(), $sql);
+    if ($request) {
+      $info = "Successfully deleted color from palette!";
+    }
+    else {
+      $error = "Could not delete color from palette!";
+    }
   }
 
   function getColorsForPalette($id) {
@@ -66,8 +92,16 @@
   }
 
   function addColorToPalette($color_id, $palette_id) {
+    global $error;
+    global $info;
     $sql = 'INSERT INTO color_palette (color_id, palette_id) VALUES (' . $color_id . ', ' . $palette_id . ');';
     $request = pg_query(getDb(), $sql);
+    if ($request) {
+      $info = "Successfully added color to palette!";
+    }
+    else {
+      $error = "Could not add color to palette!";
+    }
   }
 
   function colorOptionForPalette($color) {

@@ -16,7 +16,7 @@
 <?php
   
   require_once('database.php');
-  
+
   if (isset($_GET['colorName']) && isset($_GET['hexCode'])) {
     $safeName = htmlentities($_GET['colorName']);
     $safeHex = htmlentities($_GET['hexCode']);
@@ -35,13 +35,29 @@
   }
 
   function addColor($name, $hex) {
+    global $error;
+    global $info;
     $sql = "INSERT INTO colors (color_name, hex_code) VALUES ('" . $name . "', '" . $hex . "');";
     $request = pg_query(getDb(), $sql);
+    if ($request) {
+      $info = "Color added successfully!";
+    }
+    else {
+      $error = "Could not add color!";
+    }
   }
 
   function deleteColor($id) {
-    $sql = "DELETE FROM colors WHERE id=" . $id;
+    global $error;
+    global $info;
+    $sql = "DELETE FROM colors WHERE id = " . $id;
     $request = pg_query(getDb(), $sql);
+    if ($request) {
+      $info = "Color deleted successfully!";
+    }
+    else {
+      $error = "Could not delete color! (Is it used in a palette somewhere?)";
+    }
   }
 
   function displayColor($idToDelete, $name, $hex, $inputNameToDelete) {
