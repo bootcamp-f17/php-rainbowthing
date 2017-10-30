@@ -8,6 +8,8 @@
 </head>
 <body class="container">
 
+  <a href="/">Reset params...</a>
+
   <h1 class="text-center mt-5">Rainbowthing</h1>
 
   <h4 class="mt-5">New Color</h4>
@@ -43,8 +45,10 @@
           <div class="ml-5">
             <?php 
               $usedColors = getColorsForPalette($palette['id']);
+              $usedColorIds = array();
               if ($usedColors) {
                 foreach($usedColors as $color) {
+                  array_push($usedColorIds, $color['id']);
                   echo displayColor($color['delete_id'], $color['color_name'], $color['hex_code'], 'removeColorFromPaletteId');
                 } 
               }
@@ -59,27 +63,24 @@
 
                 <?php 
 
-                var_dump($usedColors);
-
-                foreach (getColors() as $color) {
-                
-                  // Test to see if $color is in $usedColors?
-                  if ($usedColors) {
-                    if (in_array($color, $usedColors)) {
-                      // ignore it
-                      var_dump('IGNORE');
+                  foreach (getColors() as $color) {
+                  
+                    // Test to see if $color is in $usedColors?
+                    if ($usedColors) {
+                      if (in_array($color['id'], $usedColorIds)) {
+                        // ignore it
+                      }
+                      else {
+                        print colorOptionForPalette($color);
+                      }
                     }
                     else {
-                      var_dump('NOT IN');
                       print colorOptionForPalette($color);
                     }
-                  }
-                  else {
-                    var_dump('NO USED COLORS');
-                    print colorOptionForPalette($color);
+
                   }
 
-                }?>
+                ?>
 
               </select>
               <button type="submit" class="btn btn-secondary btn-sm">Add to Palette</button>
