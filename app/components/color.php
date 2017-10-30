@@ -74,7 +74,7 @@
         <div class="col-6 btn btn-sm" style="min-height: 25px; max-width: 100px; background-color: #' . $hex . ';">&nbsp;
         </div>
 
-        <div class="col-4">' . $name . '</div>
+        <div class="col-4">' . $name . ' (#' . $hex . ')</div>
 
       </div>
     ';
